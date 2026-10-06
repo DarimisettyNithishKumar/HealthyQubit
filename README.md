@@ -1,5 +1,5 @@
 # 🧬 QuantumBio — AI & Quantum Biomedical Intelligence Platform
-https://github.com/DarimisettyNithishKumar/HealthyQubit/
+https://ais-dev-vlic6o4y7pefuncplfcvqs-625740171574.asia-east1.run.app/
 
 **QuantumBio** is an AI- and quantum-enabled biomedical platform that integrates clinical diagnostics, radiology, biomarkers, genomics, medical search, patient profiling, and personalized therapeutic insights into a unified healthcare ecosystem.
 
