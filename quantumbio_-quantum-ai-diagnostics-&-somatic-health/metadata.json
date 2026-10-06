@@ -1,0 +1,6 @@
+{
+  "name": "QuantumBio: Quantum AI Diagnostics & Somatic Health",
+  "description": "Enterprise-grade Quantum AI biomedical diagnostics platform and interactive somatosensory body map with targeted therapeutic yoga asanas for real-time preventive healthcare.",
+  "requestFramePermissions": ["microphone", "camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

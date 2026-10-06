@@ -1,0 +1,112 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated patient user profile with basic identification and metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth user ID" },
+        "email": { "type": "string", "format": "email", "description": "User email address" },
+        "displayName": { "type": "string", "description": "User full name" },
+        "photoURL": { "type": "string", "description": "Profile picture URL" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account registration timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last profile update timestamp" }
+      },
+      "required": ["uid", "email"]
+    },
+    "PatientHealthProfile": {
+      "title": "PatientHealthProfile",
+      "description": "Clinical health record storing diagnostic history, preferred yoga asanas, and bookmarked foods",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth user ID owner" },
+        "simulatedVQEHistory": { "type": "string", "description": "Serialized diagnostic session JSON" },
+        "preferredPractices": { "type": "string", "description": "Serialized preferred practices JSON" },
+        "bookmarkedFoods": { "type": "string", "description": "Serialized bookmarked foods array JSON" },
+        "recentDiagnosticCount": { "type": "number", "description": "Count of completed diagnostic assessments" },
+        "lastUpdated": { "type": "string", "format": "date-time", "description": "Timestamp of latest modification" }
+      },
+      "required": ["userId"]
+    },
+    "LiveVoiceSession": {
+      "title": "LiveVoiceSession",
+      "description": "Archived session of voice conversations conducted via Gemini-3.8-Live API",
+      "type": "object",
+      "properties": {
+        "sessionId": { "type": "string", "description": "Unique session ID" },
+        "userId": { "type": "string", "description": "Owner user ID" },
+        "startedAt": { "type": "string", "format": "date-time", "description": "Session start timestamp" },
+        "durationSeconds": { "type": "number", "description": "Call duration in seconds" },
+        "transcriptSummary": { "type": "string", "description": "Key takeaways from the audio dialogue" },
+        "messageCount": { "type": "number", "description": "Total dialogue turns exchanged" }
+      },
+      "required": ["sessionId", "userId"]
+    },
+    "GeneratedVideo": {
+      "title": "GeneratedVideo",
+      "description": "Records of anatomical animations generated using Veo video model",
+      "type": "object",
+      "properties": {
+        "videoId": { "type": "string", "description": "Unique record identifier" },
+        "userId": { "type": "string", "description": "Owner user ID" },
+        "prompt": { "type": "string", "description": "Text prompt describing the animation" },
+        "aspectRatio": { "type": "string", "enum": ["16:9", "9:16"], "description": "Video aspect ratio" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["videoId", "userId", "aspectRatio"]
+    },
+    "GroundingSearchRecord": {
+      "title": "GroundingSearchRecord",
+      "description": "Saved Google Search Grounding queries and citations",
+      "type": "object",
+      "properties": {
+        "recordId": { "type": "string", "description": "Search identifier" },
+        "userId": { "type": "string", "description": "Owner user ID" },
+        "query": { "type": "string", "description": "Search prompt or query" },
+        "summary": { "type": "string", "description": "Synthesized grounded answer" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Search timestamp" }
+      },
+      "required": ["recordId", "userId", "query"]
+    },
+    "ConsultationReport": {
+      "title": "ConsultationReport",
+      "description": "Downloadable clinical PDF report metadata containing diagnostic history and recommended therapy plan",
+      "type": "object",
+      "properties": {
+        "reportId": { "type": "string", "description": "Unique report reference number" },
+        "userId": { "type": "string", "description": "Patient user ID" },
+        "doctorName": { "type": "string", "description": "Consulting physician name" },
+        "generatedAt": { "type": "string", "format": "date-time", "description": "Generation timestamp" },
+        "diagnosticCount": { "type": "number", "description": "Total diagnostic items included" },
+        "therapyPlanScope": { "type": "string", "description": "Scope of recommended therapy" }
+      },
+      "required": ["reportId", "userId", "generatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document accessible only by the owner"
+    },
+    "/users/{userId}/healthProfile/{profileId}": {
+      "schema": "PatientHealthProfile",
+      "description": "Patient health diagnostic data and preferred practices"
+    },
+    "/users/{userId}/voiceSessions/{sessionId}": {
+      "schema": "LiveVoiceSession",
+      "description": "Archived voice conversation sessions with Gemini-3.8-Live"
+    },
+    "/users/{userId}/videos/{videoId}": {
+      "schema": "GeneratedVideo",
+      "description": "Generated Veo anatomical animation video records"
+    },
+    "/users/{userId}/searches/{recordId}": {
+      "schema": "GroundingSearchRecord",
+      "description": "Saved Google Search grounded research records"
+    },
+    "/users/{userId}/reports/{reportId}": {
+      "schema": "ConsultationReport",
+      "description": "Archived consultation PDF reports for medical review"
+    }
+  }
+}
